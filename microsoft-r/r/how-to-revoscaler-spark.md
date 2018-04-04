@@ -66,7 +66,12 @@ Sample data is required if you intend to follow the steps. This walkthrough star
 
 Optionally, you can graduate to a second series of tasks using a larger dataset. The *Airline 2012 On-Time Data Set* consists of 12 comma-separated files containing information on flight arrival and departure details for all commercial flights within the USA, for the year 2012. This is a big data set with over six million observations.
 
-To download the larger dataset, go to [https://packages.revolutionanalytics.com/datasets/](https://go.microsoft.com/fwlink/?LinkID=698896&clcid=0x409).
+To download either dataset, go to [https://packages.revolutionanalytics.com/datasets/](https://go.microsoft.com/fwlink/?LinkID=698896&clcid=0x409).
+
+To download to your current workspace...
+```r
+	download.file('https://pacakges.revolutionanalytics.com/datasets/AirlineDemoSmall.csv', 'AirlineDemoSmall.csv')
+```
 
 ## 2 - Start Revo64
 
@@ -113,6 +118,12 @@ Start with the built-in data set, *AirlineDemoSmall.csv* provided with RevoScale
 	[1] TRUE
 ```
 
+OR in your current workspace
+
+```r
+	file.exists('./AirlineDemoSmall.csv')
+```
+
 To use this file in our distributed computations, it must first be copied to Hadoop Distributed File System (HDFS). For our examples, we make extensive use of the HDFS shared directory, /share:
 
 ```r
@@ -130,6 +141,7 @@ If the AirlineDemoSmall subdirectory does not exist and you have write permissio
 ```r
 	source <-system.file("SampleData/AirlineDemoSmall.csv",
 	    package="RevoScaleR")
+	#or source <- './AirlineDemoSmall.csv'
 	inputDir <- file.path(bigDataDirRoot,"AirlineDemoSmall")
 	rxHadoopMakeDir(inputDir)
 	rxHadoopCopyFromLocal(source, inputDir)
